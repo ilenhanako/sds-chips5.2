@@ -8,6 +8,8 @@
       <%= check_box_tag "ratings[#{rating}]", "1",  @ratings_to_show_hash.include?(rating), class: 'form-check-input' %>
     </div>
   <% end %>
+  <%= hidden_field_tag :sort, @sort_column %>
+  <%= hidden_field_tag :direction, @sort_direction %>
   <%= submit_tag 'Refresh', id: 'ratings_submit', class: 'btn btn-primary' %>
 <% end %>
 <%#  Part 2: Start here... %>
@@ -16,11 +18,11 @@
   <thead>
     <tr>
       <th class="<%= 'hilite bg-warning' if @sort_column == 'title' %>">
-        <%= link_to 'Movie Title', movies_path(sort: 'title', direction: @sort_direction == 'asc' ? 'desc' : 'asc', ratings: params[:ratings]) %>
+        <%= link_to 'Movie Title', movies_path(sort: 'title', direction: @sort_direction == 'asc' ? 'desc' : 'asc', ratings: params[:ratings] || session[:ratings]) %>
       </th>
       <th>Rating</th>
       <th class="<%= 'hilite bg-warning' if @sort_column == 'release_date' %>">
-        <%= link_to 'Release Date', movies_path(sort: 'release_date', direction: @sort_direction == 'asc' ? 'desc' : 'asc', ratings: params[:ratings]) %>
+        <%= link_to 'Release Date', movies_path(sort: 'release_date', direction: @sort_direction == 'asc' ? 'desc' : 'asc', ratings: params[:ratings] || session[:ratings]) %>
       </th>
       <th>More Info</th>
     </tr>

@@ -7,7 +7,20 @@ class MoviesController < ApplicationController
   end
 
   def index
+    #retrieve all avail ratings
     @all_ratings = Movie.all_ratings
+
+    # If no params are provided, use the session settings
+    params[:sort] =  params[:sort] || session[:sort] 
+    params[:ratings] =  params[:ratings] || session[:ratings] 
+    params[:direction] =  params[:direction] || session[:direction] 
+
+    # Update session with new sorting and filtering settings
+    session[:sort] = params[:sort]
+    session[:ratings] = params[:ratings]
+    session[:direction] = params[:direction]
+
+    # Determine the selected ratings
     selected_ratings = params[:ratings] ? params[:ratings].keys : @all_ratings
     
     #determine sorting column and direction
