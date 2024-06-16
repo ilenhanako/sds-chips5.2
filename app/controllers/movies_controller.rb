@@ -9,11 +9,15 @@ class MoviesController < ApplicationController
   def index
     #retrieve all avail ratings
     @all_ratings = Movie.all_ratings
+    if params[:ratings].blank?
+      params[:ratings] = Hash[@all_ratings.map { |rating| [rating, "1"] }]
+    end
 
     # If no params are provided, use the session settings
     params[:sort] =  params[:sort] || session[:sort] 
-    params[:ratings] =  params[:ratings] || session[:ratings] 
     params[:direction] =  params[:direction] || session[:direction] 
+    params[:ratings] =  params[:ratings] || session[:ratings] 
+    
 
     # Update session with new sorting and filtering settings
     session[:sort] = params[:sort]
@@ -29,7 +33,9 @@ class MoviesController < ApplicationController
 
     # Log the selected ratings and sort parameters
     Rails.logger.debug "Selected ratings: #{selected_ratings.inspect}"
-    Rails.logger.debug "Sorting by: #{@sort_column} #{@sort_direction}"
+    Rails.logger.debug "Sorting by column - direction: #{@sort_column} #{@sort_direction}"
+    Rails.logger.debug "Filter by: #{params[:ratings]}"
+    
 
     #fetch and sort movies based on selected ratings and sort parameters
     Rails.logger.info("=========")
