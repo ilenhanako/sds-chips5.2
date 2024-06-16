@@ -20,6 +20,20 @@ test:
   <<: *default
   database: db/test.sqlite3
 
+test:
+  <<: *default
+  database: db/test.sqlite3
+
 production:
   <<: *default
   database: db/production.sqlite3
+
+production2:
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  database: <%= ENV['PRODUCTION_DB_NAME'] %>
+  username: <%= ENV['PRODUCTION_DB_USERNAME'] %>
+  password: <%= ENV['PRODUCTION_DB_PASSWORD'] %>
+  host: /cloudsql/<%= ENV['CLOUD_SQL_CONNECTION_NAME'] %>
+  port: 5432

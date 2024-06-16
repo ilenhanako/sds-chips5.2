@@ -7,7 +7,12 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    @all_ratings = Movie.all_ratings
+    selected_ratings = params[:ratings] ? params[:ratings].keys : @all_ratings
+
+    #@movies = Movie.all
+    @movies = Movie.where(rating: selected_ratings)
+    @ratings_to_show_hash = selected_ratings.to_h { |rating| [rating, "1"]}
   end
 
   def new
