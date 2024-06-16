@@ -9,9 +9,23 @@ class MoviesController < ApplicationController
   def index
     @all_ratings = Movie.all_ratings
     selected_ratings = params[:ratings] ? params[:ratings].keys : @all_ratings
+    
+    #determine sorting column and direction
+    @sort_column = params[:sort] || 'title'
+    @sort_direction = params[:direction] || 'asc'
+
+    # Log the selected ratings and sort parameters
+    Rails.logger.debug "Selected ratings: #{selected_ratings.inspect}"
+    Rails.logger.debug "Sorting by: #{@sort_column} #{@sort_direction}"
+
+    #fetch and sort movies based on selected ratings and sort parameters
+    Rails.logger.info("=========")
+    Rails.logger.info(@sort_direction)
+
+    @movies = Movie.where(rating: selected_ratings).order("#{@sort_column} #{@sort_direction}")
 
     #@movies = Movie.all
-    @movies = Movie.where(rating: selected_ratings)
+    #@movies = Movie.where(rating: selected_ratings)
     @ratings_to_show_hash = selected_ratings.to_h { |rating| [rating, "1"]}
   end
 
