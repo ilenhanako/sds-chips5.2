@@ -28,7 +28,7 @@ class MoviesController < ApplicationController
     selected_ratings = params[:ratings] ? params[:ratings].keys : @all_ratings
     
     #determine sorting column and direction
-    @sort_column = params[:sort] || 'title'
+    @sort_column = params[:sort] || 'title_header'
     @sort_direction = params[:direction] || 'asc'
 
     # Log the selected ratings and sort parameters
@@ -40,8 +40,8 @@ class MoviesController < ApplicationController
     #fetch and sort movies based on selected ratings and sort parameters
     Rails.logger.info("=========")
     Rails.logger.info(@sort_direction)
-
-    @movies = Movie.where(rating: selected_ratings).order("#{@sort_column} #{@sort_direction}")
+    sort_column2 = @sort_column.gsub("_header", "")
+    @movies = Movie.where(rating: selected_ratings).order("#{sort_column2} #{@sort_direction}")
 
     #@movies = Movie.all
     #@movies = Movie.where(rating: selected_ratings)

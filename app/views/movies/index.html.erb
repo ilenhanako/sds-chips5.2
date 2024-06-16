@@ -17,12 +17,12 @@
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th class="<%= 'hilite bg-warning' if @sort_column == 'title' %>">
-        <%= link_to 'Movie Title', movies_path(sort: 'title', direction: @sort_direction == 'asc' ? 'desc' : 'asc', ratings: params[:ratings] || session[:ratings]) %>
+      <th class="<%= 'hilite bg-warning' if @sort_column == 'title_header' %>">
+        <%= link_to 'Movie Title', movies_path(sort: 'title_header', direction: @sort_direction == 'asc' ? 'desc' : 'asc', ratings: params[:ratings] || session[:ratings]) %>
       </th>
       <th>Rating</th>
-      <th class="<%= 'hilite bg-warning' if @sort_column == 'release_date' %>">
-        <%= link_to 'Release Date', movies_path(sort: 'release_date', direction: @sort_direction == 'asc' ? 'desc' : 'asc', ratings: params[:ratings] || session[:ratings]) %>
+      <th class="<%= 'hilite bg-warning' if @sort_column == 'release_date_header' %>">
+        <%= link_to 'Release Date', movies_path(sort: 'release_date_header', direction: @sort_direction == 'asc' ? 'desc' : 'asc', ratings: params[:ratings] || session[:ratings]) %>
       </th>
       <th>More Info</th>
     </tr>
